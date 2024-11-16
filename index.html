@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Sorting Home</title>
+    <style>
+        /* Header Bar Styles */
+        #Navbar {
+            background: linear-gradient(90deg, rgba(255, 105, 180, 1) 0%, rgba(255, 99, 71, 1) 100%);
+        }
+
+        #Navbar .navbar-brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        #Navbar .nav-link {
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        #Navbar .nav-link:hover {
+            color: #ffd700;
+        }
+
+        #mode {
+            background-color: #00bfff;
+            color: white;
+            padding: 5px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #mode:hover {
+            background-color: #009acd;
+        }
+
+        /* Generate Button Styling */
+        #gen_rand_array {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s;
+        }
+
+        #gen_rand_array:hover {
+            background-color: #ff4500;
+            transform: scale(1.1);
+        }
+
+        /* Chatbot UI Styles */
+        #chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #00bfff;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #chatbot:hover {
+            background-color: #009acd;
+            transform: scale(1.1);
+        }
+
+        /* Chatbox Styling */
+        #chatbox {
+            display: none;
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            width: 350px;
+            height: 400px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            overflow-y: auto;
+            font-family: Arial, sans-serif;
+        }
+
+        #chatbox .messages {
+            height: 85%;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        #chatbox input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        #chatbox input:focus {
+            border-color: #00bfff;
+        }
+
+        .user-message {
+            background-color: #f0f8ff;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+            text-align: left;
+        }
+
+        .ai-message {
+            background-color: #e6ffe6;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+            text-align: left;
+        }
+
+        /* Adjusting chatbot's appearance */
+        .user-message, .ai-message {
+            font-size: 1rem;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <nav id="Navbar" class="navbar navbar-expand-sm navbar-dark">
+        <a class="navbar-brand h3">Home</a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#mobile">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mobile">
+            <ul class="navbar-nav mr-auto">
+                <li id="bubble" class="nav-item"><a href="" class="nav-link">Home</a></li>
+                <li class="nav-item">
+                    <a id="bub" href="#" class="nav-link">Bubble Sort Algorithm</a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" id="selc">Selection Sort Algorithm</a>
+                </li>
+                <li id="" class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" id="insertion">Insertion Sort Algorithm</a>
+                </li>
+            </ul>
+        </div>
+        <button id="mode">Light</button>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 mr-auto">
+                <p class="mr-auto">Size of Array</p>
+                <input id="a_size" type="number" min="10" max="100" step="5" value="10">
+            </div>
+            <div class="col-md-4">
+                <h2 class=" py-3 text-center">Sorting Visualizer</h2>
+            </div>
+            <div class="col-md-4">
+                <p>Speed of Algorithm</p>
+                <input type="number" min="1" max="1000">
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button id="gen_rand_array" class="btn btn-dark">Generate</button>
+    </div>
+    <div id="bars_container"></div>
+
+    <!-- Chatbot button -->
+    <div id="chatbot" onclick="toggleChat()">💬</div>
+
+    <!-- Chatbox -->
+    <div id="chatbox">
+        <div class="messages" id="message-box"></div>
+        <input type="text" id="user-input" placeholder="Ask about sorting..." onkeydown="if(event.key === 'Enter') sendMessage()">
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="./scripts/Ui_update/theme.js"></script>
+    <script src="./scripts/visulize.js"></script>
+    <script src="./scripts/insertion.js"></script>
+    <script src="./scripts/selection.js"></script>
+    <script src="./scripts/bubble.js"></script>
+    <script src="./scripts/bar.js"></script>
+
+    <script>
+       
+    // Toggle Chatbot visibility
+    function toggleChat() {
+        const chatbox = document.getElementById('chatbox');
+        chatbox.style.display = chatbox.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // AI response generator based on user input
+    function sendMessage() {
+        const userInput = document.getElementById('user-input').value;
+        const messageBox = document.getElementById('message-box');
+        
+        if (userInput.trim() !== "") {
+            // Display user's message
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('user-message');
+            userMessage.textContent = "You: " + userInput;
+            messageBox.appendChild(userMessage);
+
+            // Generate AI response based on input
+            const aiMessage = document.createElement('div');
+            aiMessage.classList.add('ai-message');
+            aiMessage.textContent = getBotResponse(userInput);
+            messageBox.appendChild(aiMessage);
+
+            // Scroll to bottom of the chat
+            messageBox.scrollTop = messageBox.scrollHeight;
+
+            // Clear the input field
+            document.getElementById('user-input').value = '';
+        }
+    }
+
+    // Function to provide dynamic and interesting responses
+    function getBotResponse(input) {
+        // Normalize user input to lowercase for easier matching
+        const userQuery = input.toLowerCase();
+        
+        // Define a set of responses based on common queries
+        const responses = {
+    "sorting": [
+        "Sorting is a way to arrange data in a particular order (ascending or descending). This makes it easier to search, analyze, and manage large datasets.",
+        "In computer science, sorting is a key step for algorithms like searching, binary search trees, and graph algorithms.",
+        "Did you know? Efficient sorting algorithms like Merge Sort and Quick Sort are widely used in database management systems."
+    ],
+    "bubble sort": [
+        "Bubble Sort is named for how smaller elements 'bubble' to the surface through successive swaps.",
+        "One advantage of Bubble Sort is its simplicity, but it’s not suitable for large datasets because of its inefficiency.",
+        "Fun fact: Bubble Sort can be optimized by stopping early if no swaps are made in a pass, which means the array is already sorted."
+    ],
+    "quick sort": [
+        "Quick Sort is highly efficient and uses a pivot element to divide the array into smaller sub-arrays. It works particularly well with large datasets.",
+        "The performance of Quick Sort depends heavily on the choice of the pivot. Randomized pivot selection can help avoid the worst-case scenario.",
+        "Did you know? Quick Sort was developed by Tony Hoare in 1960 and is still widely used due to its speed and efficiency."
+    ],
+    "insertion sort": [
+        "Insertion Sort is intuitive and works well when the array is nearly sorted, as it minimizes the number of shifts required.",
+        "One interesting property of Insertion Sort is its stability, meaning it maintains the relative order of equal elements.",
+        "Practical use: Insertion Sort is often used in hybrid algorithms like Timsort for small data chunks."
+    ],
+    "selection sort": [
+        "Selection Sort works by finding the minimum (or maximum) element and placing it in its correct position. It’s simple but inefficient for large arrays.",
+        "A downside of Selection Sort is that it performs a lot of unnecessary comparisons, even if the array is already sorted.",
+        "Did you know? Despite its inefficiency, Selection Sort is often used in teaching algorithms because it’s easy to understand."
+    ],
+    "merge sort": [
+        "Merge Sort is a stable, divide-and-conquer algorithm that splits the array into halves, sorts each half, and then merges them back together.",
+        "Merge Sort has a time complexity of O(n log n), making it highly efficient for large datasets.",
+        "Fun fact: Merge Sort works well for external sorting, where data doesn’t fit entirely in memory, like in big data applications."
+    ],
+    "heap sort": [
+        "Heap Sort uses a binary heap to efficiently sort data. It’s an in-place algorithm with a time complexity of O(n log n).",
+        "Heap Sort doesn’t require extra memory for merging, unlike Merge Sort, making it space-efficient.",
+        "Did you know? Heap Sort is used in priority queue implementations and scheduling problems."
+    ],
+    "radix sort": [
+        "Radix Sort is a non-comparative sorting algorithm that processes digits of numbers from least significant to most significant.",
+        "It works efficiently for large datasets with fixed-length integer keys, with a time complexity of O(nk) where k is the number of digits.",
+        "Fun fact: Radix Sort is widely used for sorting data like phone numbers, postal codes, or dates."
+    ],
+    "sorting algorithms": [
+        "Sorting algorithms vary in efficiency. Merge Sort and Quick Sort are great for large datasets, while Insertion Sort works well for small ones.",
+        "Some advanced algorithms like Timsort combine Insertion Sort and Merge Sort for better performance on real-world datasets.",
+        "Sorting is also crucial for other algorithms like searching, compression, and data visualization."
+    ],
+    "applications of sorting": [
+        "Sorting is widely used in applications like searching, database management, scheduling, and data compression.",
+        "Efficient sorting helps in algorithms like Kruskal’s MST algorithm and Huffman Encoding.",
+        "Practical examples: E-commerce websites use sorting to display products by price or popularity."
+    ],
+    "comparison of sorting algorithms": [
+        "Merge Sort is stable and efficient but uses extra memory. Quick Sort is fast but can be unstable. Bubble Sort is simple but slow.",
+        "Insertion Sort is good for small datasets. Heap Sort is space-efficient but not stable.",
+        "Choosing the right sorting algorithm depends on factors like dataset size, memory constraints, and the need for stability."
+    ],
+    "default": [
+        "I'm sorry, I don’t understand that. Could you try asking about sorting algorithms, their types, or applications?",
+        "Let me know if you want to learn about Bubble Sort, Quick Sort, or other sorting methods. I'm here to help!"
+    ]
+};
+
+        
+
+        // Look for matching response based on user query
+        for (const key in responses) {
+            if (userQuery.includes(key)) {
+                // Randomly select a response from the list for variety
+                const randomResponse = responses[key][Math.floor(Math.random() * responses[key].length)];
+                return randomResponse;
+            }
+        }
+
+        // Default response if no match is found
+        return responses["default"][Math.floor(Math.random() * responses["default"].length)];
+    }
+</script>
+
+</body>
+</html>
